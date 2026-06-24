@@ -1,0 +1,38 @@
+:root {
+    --amazon-blue: #131921;
+    --amazon-light: #232f3e;
+    --amazon-yellow: #febd69;
+    --amazon-orange: #f3a847;
+}
+
+body {
+    background-color: #eaeded;
+    font-family: Arial, sans-serif;
+}
+
+/* Enhances Banner layout presentation layer */
+.mask-gradient {
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+    display: block;
+    width: 100%;
+}
+
+/* Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+/* Global mappings styling variables */
+.bg-amazon_blue { background-color: var(--amazon-blue); }
+.bg-amazon_light { background-color: var(--amazon-light); }
+.bg-amazon_yellow { background-color: var(--amazon-yellow); }
+.bg-amazon_orange { background-color: var(--amazon-orange); }
+.text-amazon_blue { color: var(--amazon-blue); }
+.text-amazon_yellow { color: var(--amazon-yellow); }
+.text-amazon_orange { color: var(--amazon-orange); }
+.focus-within\:ring-amazon_orange:focus-within { --tw-ring-color: var(--amazon-orange); }

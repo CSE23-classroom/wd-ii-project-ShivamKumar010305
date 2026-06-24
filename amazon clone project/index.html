@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon India Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col min-h-screen">
 
+    <header class="sticky top-0 z-50">
+        <div class="bg-amazon_blue text-white px-4 py-2 flex items-center justify-between gap-4">
+            <div class="border border-transparent hover:border-white p-1 cursor-pointer flex items-center" onclick="filterCategory('All')">
+                <span class="text-2xl font-bold tracking-wider">amazon</span><span class="text-amazon_yellow text-xs pt-3">.in</span>
+            </div>
+
+            <div class="border border-transparent hover:border-white p-1 cursor-pointer hidden md:flex items-center gap-1">
+                <i class="fa-solid fa-location-dot text-gray-300 pt-2"></i>
+                <div class="text-xs">
+                    <p class="text-gray-400 text-[11px]">Deliver to</p>
+                    <p class="font-bold -mt-1">India</p>
+                </div>
+            </div>
+
+            <div class="flex flex-grow max-w-3xl items-center bg-white rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-amazon_orange">
+                <select class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-3 py-2.5 outline-none border-r border-gray-300 cursor-pointer">
+                    <option>All Departments</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Search Amazon.in" class="w-full text-black px-3 py-1.5 text-sm outline-none">
+                <button onclick="handleSearch()" class="bg-amazon_yellow hover:bg-amazon_orange text-amazon_blue px-6 py-2.5 transition">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm">
+                <div onclick="toggleModal('loginModal')" class="border border-transparent hover:border-white p-1 cursor-pointer text-left">
+                    <p class="text-xs text-gray-300" id="navUserLabel">Hello, sign in</p>
+                    <p class="font-bold -mt-1">Account & Lists <i class="fa-solid fa-caret-down text-xs text-gray-400"></i></p>
+                </div>
+
+                <div onclick="openSlideOver('wishlistSide')" class="border border-transparent hover:border-white p-1 cursor-pointer relative">
+                    <p class="text-xs text-gray-300">Your</p>
+                    <p class="font-bold -mt-1">Wishlist</p>
+                    <span id="wishlistCount" class="absolute -top-1 -right-2 bg-amazon_orange text-amazon_blue font-bold rounded-full text-xs px-1.5">0</span>
+                </div>
+
+                <div onclick="openSlideOver('cartSide')" class="border border-transparent hover:border-white p-1 cursor-pointer flex items-center gap-1 relative">
+                    <div class="relative">
+                        <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-2 left-1/2 -translate-x-1/2 text-amazon_orange font-bold text-sm">0</span>
+                    </div>
+                    <p class="font-bold mt-3 hidden sm:block">Cart</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-amazon_light text-white px-4 py-1.5 text-sm flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <p class="font-bold cursor-pointer flex items-center gap-1 border border-transparent hover:border-white p-1" onclick="filterCategory('All')"><i class="fa-solid fa-bars"></i> All</p>
+                <p class="cursor-pointer border border-transparent hover:border-white p-1" onclick="filterCategory('Electronics')">Electronics</p>
+                <p class="cursor-pointer border border-transparent hover:border-white p-1" onclick="filterCategory('Fashion')">Fashion</p>
+                <p class="cursor-pointer border border-transparent hover:border-white p-1" onclick="filterCategory('Home')">Home & Kitchen</p>
+                <p class="cursor-pointer border border-transparent hover:border-white p-1" onclick="filterCategory('Books')">Books</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="relative w-full max-w-[1500px] mx-auto bg-gray-200">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxSD3Nvk5pvVpHmanXhBSQKvHGCFMqNbsSEBFJd6_Nl4gO7jAoMbPf00I&s=10" alt="Amazon Hero Banner" class="w-full h-auto min-h-[420px] md:max-h-[600px] object-cover mask-gradient">
+    </div>
+
+    <main class="max-w-[1500px] mx-auto px-4 -mt-12 sm:-mt-24 md:-mt-44 relative z-10 flex-grow w-full">
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
+            </div>
+    </main>
+
+    <footer class="bg-amazon_light text-white text-sm mt-auto">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="w-full bg-slate-700 hover:bg-slate-600 text-center py-3 text-xs font-semibold transition">
+            Back to top
+        </button>
+        <div class="max-w-4xl mx-auto py-10 px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="font-bold mb-3 text-base">Get to Know Us</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li class="hover:underline cursor-pointer">About Us</li>
+                    <li class="hover:underline cursor-pointer">Careers</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-3 text-base">Connect with Us</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li class="hover:underline cursor-pointer">Facebook</li>
+                    <li class="hover:underline cursor-pointer">Instagram</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-3 text-base">Make Money with Us</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li class="hover:underline cursor-pointer">Sell on Amazon</li>
+                    <li class="hover:underline cursor-pointer">Become an Affiliate</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-3 text-base">Let Us Help You</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li class="hover:underline cursor-pointer">Your Account</li>
+                    <li class="hover:underline cursor-pointer">Help</li>
+                </ul>
+            </div>
+        </div>
+        <div class="bg-amazon_blue py-6 text-center text-xs text-gray-400 border-t border-gray-700">
+            <p>© 1996-2026, Amazon.com, Inc. or its affiliates - Clone Project</p>
+        </div>
+    </footer>
+
+    <div id="loginModal" class="fixed inset-0 bg-black/60 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-md max-w-sm w-full p-6 relative shadow-lg">
+            <button onclick="toggleModal('loginModal')" class="absolute top-3 right-3 text-gray-500 hover:text-black text-lg">&times;</button>
+            <div class="text-center mb-5">
+                <span class="text-2xl font-bold text-black tracking-wider">amazon</span><span class="text-amazon_blue text-xs font-bold pt-3">.in</span>
+            </div>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Sign in</h2>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Email or mobile phone number</label>
+                    <input type="text" id="loginEmail" required class="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:border-amazon_orange focus:ring-1 focus:ring-amazon_orange outline-none text-black">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full border border-gray-400 rounded px-3 py-1.5 text-sm focus:border-amazon_orange focus:ring-1 focus:ring-amazon_orange outline-none text-black">
+                </div>
+                <button type="submit" class="w-full bg-amazon_yellow hover:bg-amazon_orange text-black py-1.5 rounded text-sm font-medium border border-amber-500 shadow transition">
+                    Continue
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="cartSide" class="fixed inset-y-0 right-0 z-[90] w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 bg-amazon_light text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold"><i class="fa-solid fa-cart-shopping mr-2"></i>Shopping Cart</h3>
+            <button onclick="closeSlideOver('cartSide')" class="text-2xl hover:text-amazon_yellow">&times;</button>
+        </div>
+        <div id="cartItems" class="flex-grow p-4 overflow-y-auto custom-scrollbar space-y-4 text-black"></div>
+        <div class="p-4 border-t bg-gray-50 text-black">
+            <div class="flex justify-between items-center text-lg font-bold mb-4">
+                <span>Subtotal:</span>
+                <span id="cartSubtotal" class="text-amber-700">₹0</span>
+            </div>
+            <button onclick="alert('Proceeding to complete payment!')" class="w-full bg-amazon_yellow hover:bg-amazon_orange py-2.5 rounded-lg font-bold text-sm shadow transition">
+                Proceed to Buy
+            </button>
+        </div>
+    </div>
+
+    <div id="wishlistSide" class="fixed inset-y-0 right-0 z-[90] w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 bg-amazon_light text-white flex justify-between items-center">
+            <h3 class="text-lg font-bold"><i class="fa-solid fa-heart mr-2"></i>Your Wishlist</h3>
+            <button onclick="closeSlideOver('wishlistSide')" class="text-2xl hover:text-amazon_yellow">&times;</button>
+        </div>
+        <div id="wishlistItems" class="flex-grow p-4 overflow-y-auto custom-scrollbar space-y-4 text-black"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
